@@ -1,0 +1,13 @@
+C:\Users\Acer\Desktop\home\homework_1\Task05\bin\Debug\netcoreapp3.1\Task05.exe
+C:\Users\Acer\Desktop\home\homework_1\Task05\bin\Debug\netcoreapp3.1\Task05.deps.json
+C:\Users\Acer\Desktop\home\homework_1\Task05\bin\Debug\netcoreapp3.1\Task05.runtimeconfig.json
+C:\Users\Acer\Desktop\home\homework_1\Task05\bin\Debug\netcoreapp3.1\Task05.runtimeconfig.dev.json
+C:\Users\Acer\Desktop\home\homework_1\Task05\bin\Debug\netcoreapp3.1\Task05.dll
+C:\Users\Acer\Desktop\home\homework_1\Task05\bin\Debug\netcoreapp3.1\Task05.pdb
+C:\Users\Acer\Desktop\home\homework_1\Task05\obj\Debug\netcoreapp3.1\Task05.csprojAssemblyReference.cache
+C:\Users\Acer\Desktop\home\homework_1\Task05\obj\Debug\netcoreapp3.1\Task05.AssemblyInfoInputs.cache
+C:\Users\Acer\Desktop\home\homework_1\Task05\obj\Debug\netcoreapp3.1\Task05.AssemblyInfo.cs
+C:\Users\Acer\Desktop\home\homework_1\Task05\obj\Debug\netcoreapp3.1\Task05.csproj.CoreCompileInputs.cache
+C:\Users\Acer\Desktop\home\homework_1\Task05\obj\Debug\netcoreapp3.1\Task05.dll
+C:\Users\Acer\Desktop\home\homework_1\Task05\obj\Debug\netcoreapp3.1\Task05.pdb
+C:\Users\Acer\Desktop\home\homework_1\Task05\obj\Debug\netcoreapp3.1\Task05.genruntimeconfig.cache
