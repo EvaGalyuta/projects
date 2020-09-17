@@ -1,0 +1,41 @@
+/*
+   Дисциплина: "Программирование"
+   Группа:      101ПИ/1
+   Студент:     Иванов Иван Иванович
+   Задача:      Написать метод для вычисления площади и длины окружности, радиус которой задает вещественный параметр. 
+    В основной программе, вводя значения радиуса, с помощью обращения к методу, вычислять площадь и длину окружности. При вводе применять метод double.TryParse() и проверять корректность введенного значения. При выводе использовать форматную строку метода WriteLine(). Окончание работы программы – ввод нулевого или отрицательного значения радиуса.    
+     Дата:        2015.09.17
+*/
+using System;
+class MyExample
+{
+    public static double GetSquare(double radius)=> Math.PI * radius * radius;//лямда 
+    public static double GetLength(double radius)
+    {
+        return 2 * Math.PI * radius;
+    }
+    public static void Main()
+    {
+        do
+        {
+            double r, //радиус
+               s, // площадь круга
+               c;  // длина окружности        
+            string str;       // Рабочая строка для ввода и вывода данных 
+            do
+            {
+                Console.Write("Введите радиус: ");
+                str = Console.ReadLine();         //Читаем символьную строку
+            } while (!double.TryParse(str, out r)); // Преобразуем в число
+            s = GetSquare(r);
+            c = GetLength(r);
+            Console.WriteLine(str);         // выводим строку с результатом
+            Console.WriteLine("{0} , {1}", s, c);
+            Console.WriteLine();
+            Console.WriteLine("Для выхода из программы нажмите ESC, для продолжения любую другую. ");
+            // ReadLine(); 
+        } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+
+    } //Конец определения Main()
+} //Конец объявления MyExample
+
