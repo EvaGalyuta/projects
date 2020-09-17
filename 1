@@ -1,0 +1,31 @@
+using System;
+using static System.Console;
+
+namespace task1
+{
+    class Program
+    {
+        public static int CalculateBine(uint n)
+        {
+            double b = (1 + Math.Sqrt(5)) / 2;
+            double un = (Math.Pow(b, n) - Math.Pow(-b, -n)) / (2 * b - 1);
+            return (int)(un + 0.5);
+        }
+        public static void Main()
+        {
+            uint n;            // Номер члена ряда   
+            int res;           // Целочисленное значение члена 
+            string line;       // Строка для приёма данных 
+            do
+            {
+                Write("Введите номер члена ряда: ");
+                line = ReadLine();
+            } while (!uint.TryParse(line, out n));
+            res = CalculateBine(n);  // Вызов метода
+            WriteLine("число Фибоначчи: "+ res);
+            WriteLine("Для выхода из программы нажмите ENTER.");
+            ReadLine();
+        } //Конец определения метода Main()
+    }
+}
+
