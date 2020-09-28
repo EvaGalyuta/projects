@@ -1,0 +1,188 @@
+using System;
+using System.Dynamic;
+using System.Security;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+/// <summary>
+/// Игра: Быки и коровы.
+/// </summary>
+namespace byki_korovy
+{
+    class Program
+    {
+        // Красивый вывод правил игры.
+        static void rules()
+        {
+            string rules = "Компьютер загадывает четырёхзначное или n-значное число, состоящее из неповторяющихся цифр. \n" +
+                "Затем пользователь, пытаясь угадать загаданное число, вводит четырёхзначное/n-значное число.\n"+
+                "Компьютер выводит сообщение о том, сколько цифр(коров) угадано, но не расположено на своих местах,\n" +
+                "и сколько цифр(быков) угадано и находится на своих местах.\n"+
+                "После чего пользователь снова пытается угадать число. \n " +
+                "Раунды продолжаются до тех пор, пока пользователь не отгадает загаданное число(т.е.получит четыре “быка”).";
+            // Разбиение текста на массив.
+            string[] lines = Regex.Split(rules, "\r\n|\r|\n");
+            //Отступ слева для каждой строки.
+            int left = 0;
+            //Определяем отступ сверху для первой строки.
+            int top = (Console.WindowHeight / 2) - (lines.Length / 2) - 1;
+            //Приблизительный центр консоли.
+            int center = Console.WindowWidth / 2;
+
+        }
+        // Проверка ввода числа.
+        static long try_number()
+        {
+            ulong data = 0;
+            int test = 0;
+            string num;
+            do
+            {
+                //Вывод ошибки ввода.
+                if (test != 0)
+                    Console.WriteLine("Ошибка ввода!!!!!");
+                test++;
+                Console.Write("Введите число: ");
+                //Ввод числа и его проверка в уловии цикла.
+                num = Console.ReadLine();
+            } while (!ulong.TryParse(num, out data) && num != "e" && numberofdigits(num)!= count); //e - индикатор выхода из игры.
+            if (num != "e")
+                return (long)data;
+            return -1;
+        }
+        // Количество цифр в числе.
+        static long numberofdigits(long num)
+        {
+            long res = 0;
+            while(num > 0)
+            {
+                res = num % 10;
+                num /= 10;
+            }
+            return res;
+        }
+        // Метод для подсчёта количества цифр числа находящихся на нужных местах.
+        static int how_bulls(long num, long answer)
+        {
+            int res = 0;
+            while (num > 0)
+            {
+                // Сравнение каждой цифры числа с загаданным числом.
+                res += num % 10 == answer % 10 ? 1 : 0;
+                num /= 10;
+                answer /= 10;
+            }
+            return res;
+        }
+        // Метод для подсчёта количества цифр числа находящихся не на нужных местах.
+        static int how_cows(long num, long ans)
+        {
+            int res = 0, i = 0;
+            ulong[] user = new ulong[10];
+            ulong[] answer = new ulong[10];
+            //Разбиение чисел на массивы.
+            while (num > 0)
+            {
+                user[i] = (ulong)num % 10;
+                answer[i] = (ulong)ans % 10;
+                num /= 10;
+                ans /= 10;
+                ++i;
+            }
+            // Сравнение цифр чисел.
+            for (int j = 0; j < i; j++)
+                for (int k = 0; k < i; ++k)
+                    res += user[j] == answer[k] ? 1 : 0;
+            return res;
+        }
+        /// Метод для получения рандомного n значного числа (от 4 до 10).
+        static long RandomNumber(long n)
+        {
+            long data = 0, num;
+            Random rnd = new Random();
+            // Задаётся первая цифра числа, которая не может быть 0.
+            data = rnd.Next(1, 10);
+            for (long i = 0; i < n - 1; ++i)
+            {
+                long tmp = data;
+                int test = 0;
+                // Потом идёт генерация следующей цифры и проверка есть ли такая цифра в конечном числе.
+                num = rnd.Next(0, 10);
+                while (tmp > 0)
+                    if (tmp % 10 == num)
+                        test++;
+                tmp /= 10;
+                if (test == 0)
+                    data = data * 10 + num;
+                else
+                    // Если цифр таких не было - она доббовляется к числу, иначе - цикл отматывается на 1 назад.
+                    i--;
+            }
+            return data;
+        }
+        //Метод для игры.
+        static long play(long number)
+        {
+            long user;
+            do
+            {
+                //Ввод числа.
+                user = try_number();
+                //Вывод коров и быков.
+                Console.WriteLine("Всего коров: " + how_cows(user, number));
+                Console.WriteLine("Всего быков: " + how_bulls(user, number));
+            } while (number != user && user != -1); //Если user = -1, то это индикатор проигрыша.
+            return user;
+        }
+
+        static void Main(string[] args)
+        {
+            do
+            {
+                string button;
+                int test = 0;
+                bool result = false;
+
+                //Проверка корректности входных данных.
+                do
+                {
+                    Console.Clear();
+                    if (test > 0)
+                        Console.WriteLine("Ошибка ввода!!!!!");
+                    test++;
+                    Console.WriteLine("Выберите игру: ");
+                    Console.WriteLine("- для выбора игры с 4-х значным числом введите \"4\".");
+                    Console.WriteLine("- для выбора игры с n значным числом введите \"n\".");
+                    button = Console.ReadLine();
+                } while (button != "4" && button != "n");
+                long number, num = 0; // Переменная для загаданного числа.
+                if (button == "4")
+                {
+                    num = 4;
+                }
+                else if (button == "n")
+                {
+                    //Проверка входных данных и выбор скольки значное число будет.
+                    do
+                    {
+                        Console.WriteLine("От 1 до 10");
+                        num = try_number();
+                    } while (num < 1 || num > 10);
+                    Console.Clear();
+                }
+                // Генерация случайного 4 значного числа.
+                number = RandomNumber(num);
+                Console.WriteLine("Если хотите прервать игру нажмите \"e\".");
+                long user = play(number);
+                // Вывод сообщения о проигрыше / выигрыше
+                Console.Clear();
+                if ((long)user == -1)
+                    Console.WriteLine("LOSE))))");
+                else
+                    Console.WriteLine("WIN!!!");
+                Console.WriteLine("Для выхода из программы нажмите ESC, ");
+                Console.WriteLine("для продолжения любую другую. ");
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape); //Продолжение или конец игры.
+
+        }
+    }
+}
