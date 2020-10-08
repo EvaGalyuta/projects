@@ -1,0 +1,94 @@
+using System;
+
+partial class Program
+{
+    /// <summary>
+    /// Поиск новых чисел по условию задачи.
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    private static void SwapMaxDigit(ref int a, ref int b)
+    {
+        int[] arr = new int[12];
+        int[] arr_2 = new int[12];
+        
+        int a_1 = a, b_1 = b;
+        int i = 0;
+        int max_a, max_b;
+        // Разбиение чисел на массивы.
+        arr[0] = a == 0 ? 0 : arr[0];
+        arr_2[0] = b == 0 ? 0 : arr_2[0];
+        max_a = a == 0 ? 0 : a % 10;
+        max_b = b == 0 ? 0 : b % 10;
+        while (a_1 > 0)
+        {
+            arr[i] = a_1 % 10;
+            if (arr[i] > max_a)
+                max_a = arr[i];
+            a_1 /= 10;
+            ++i;
+        }
+        int j = 0;
+        while (b_1 > 0)
+        {
+            arr_2[j] = b_1 % 10;
+            if (arr_2[j] > max_b)
+                max_b = arr_2[j];
+            b_1 /= 10;
+            ++j;
+        }
+        int y = 1;
+        int res_1 = 0, res_2 = 0;
+        i = a == 0 ? 1 : i;
+        j = b == 0 ? 1 : j;
+        // Подсчёт новых чисел.
+        for (int k = 0; k < i; ++k)
+        {
+            if (arr[k] == max_a)
+                arr[k] = max_b;
+            res_1 += arr[k] * y;
+            y *= 10;
+        }
+        y = 1;
+
+        for (int k = 0; k < j; ++k)
+        {
+            if (arr_2[k] == max_b)
+                arr_2[k] = max_a;
+            res_2 += arr_2[k] * y;
+            y *= 10;
+        }
+        a = res_1;
+        b = res_2;
+    }
+    /// <summary>
+    /// Проврека корректности данных.
+    /// </summary>
+    /// <param name="v1"></param>
+    /// <param name="v2"></param>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    private static bool TryParseInput(string v1, string v2, out int a, out int b)
+    {
+        a = 0;
+        b = 0;
+        if (!int.TryParse(v1, out a) || !int.TryParse(v2, out b) || a < 0 || b < 0)
+            return false;
+        return true;
+    }
+    public static void Main()
+    {
+        if (!TryParseInput(Console.ReadLine(), Console.ReadLine(), out int a, out int b))
+        {
+            Console.WriteLine("Incorrect input");
+        }
+        else
+        {
+            SwapMaxDigit(ref a, ref b);
+            Console.WriteLine(a);
+            Console.WriteLine(b);
+        }
+    }
+
+}
