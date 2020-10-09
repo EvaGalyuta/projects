@@ -9,8 +9,8 @@ partial class Program
     /// <returns>Итоговый массив данных.</returns>
     private static int[] ParseInput(string input)
     {
-        string[] array = new string[input.Length];
-        array = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+        string[] array = new string[input.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length];
+        array = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         int[] arr_res = new int[array.Length];
         for (int i = 0; i < array.Length; i++)
         {
