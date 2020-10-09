@@ -1,0 +1,43 @@
+using System;
+
+partial class Program
+{
+    /// <summary>
+    /// Ввод переменных.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <returns>Итоговый массив данных.</returns>
+    private static int[] ParseInput(string input)
+    {
+        string[] array = new string[input.Length];
+        array = input.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+        int[] arr_res = new int[array.Length];
+        for (int i = 0; i < array.Length; i++)
+        {
+            int.TryParse(array[i], out arr_res[i]);
+        }
+        return arr_res;
+    }
+    /// <summary>
+    /// Поиск максимума в массиве.
+    /// </summary>
+    /// <param name="numberArray"></param>
+    /// <returns>Максимальное число.</returns>
+    private static int GetMaxInArray(int[] numberArray)
+    {
+        int result = numberArray[0];
+        for (int i = 0; i < numberArray.Length; i++)
+            result = result < numberArray[i] ? numberArray[i] : result;
+        return result;
+    }
+}
+
+partial class Program
+{
+    public static void Main(string[] args)
+    {
+        int[] numberArray = ParseInput(Console.ReadLine());
+
+        Console.WriteLine(GetMaxInArray(numberArray));
+    }
+}
